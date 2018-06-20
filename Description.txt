@@ -1,0 +1,6 @@
+Application Menu Planner
+------------------------
+
+Application in Angular4 using PrimeNG framework and IndexedDB as database local storage.
+It allows to store, retrieve, update and delete data.
+It allows to export data to print.

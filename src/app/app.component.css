@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Shrikhand');
+@import url('https://fonts.googleapis.com/css?family=Concert+One');
+
+h1 {
+    background-color: #7FBF3F;
+    height: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
+    color: white;
+   /* font-family: 'Shrikhand', cursive;*/
+    font-family: 'Concert One', cursive;
+}
+
+#dateSelected{
+    font-family: 'Concert One', cursive;
+}
+
+body > div > div.ui-g-12.ui-md-6.ui-lg-6 > p-calendar > span > div {
+    width:100%!important;
+}
+/*:host ::ng-deep .main-calendar{
+    width: 200%!important;
+}*/
+
+.ui-datepicker.ui-datepicker-inline {
+    width: inherit!important;
+}
+.ui-datepicker{
+    width: inherit;
+}
+
+.main-calendar  {
+    width: 270px;
+  }
+
+  i.fa {
+    margin: 0.5em;
+    font-size: 1.5em;
+    color: white;/*#303030;*/
+    border: 2px solid white; /* #303030;*/
+    border-radius: 50%;
+    padding: 0.5em;
+    transition: all .5s ease;
+    width: 1em; 
+    text-align: center;
+  }
+  
+  i.fa:hover{
+    color:lightblue;
+     border: 2px solid lightblue;
+    cursor:pointer;
+  }
+
