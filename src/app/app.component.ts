@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {AngularIndexedDB} from 'angular2-indexeddb';
+import * as moment from 'moment';
+import {MenuService} from "./services/menu.service";
+import {Menu} from "./interfaces/menu";
 
 @Component({
   selector: 'app-root',
@@ -10,21 +14,54 @@ export class AppComponent implements OnInit  {
 
   dateSelection: Date;
   dateSelectionIso: string;
-  food: string;
+  breakfast: string;
+  lunch: string;
+  dinner: string;
+  menu: Menu;
   foodItems: {item: string}[] = [{item: 'bread'}, {item: 'fruit'}];
 
   isEditVisible = false;
 
+  constructor(public menuService: MenuService){
+    
+  }
 
   ngOnInit() {
+
     if (!this.dateSelection) {
       this.dateSelection = new Date();
     }
-    this.dateSelectionIso = this.dateSelection.toISOString().substring(0, 10);
+
+    this.menuService.getDb().getByIndex('menu', 'date', this.displayFormattedDate(this.dateSelection)).then((menu) => {
+      console.log(menu);
+          this.breakfast = menu.breakfast;
+          this.lunch = menu.lunch;
+          this.dinner = menu.dinner;
+    
+    });
+  }
+
+  public changeDateSelection() {
+    this.clearDay();
+
+    this.menuService.getDb().getByIndex('menu', 'date', this.displayFormattedDate(this.dateSelection)).then((menu) => {
+        console.log(menu);
+        this.breakfast = menu.breakfast;
+        this.lunch = menu.lunch;
+        this.dinner = menu.dinner;
+
+    });
   }
 
   public addFood() {
-    this.foodItems.push({item: this.food});
+
+    const menu = <Menu> {'date': this.displayFormattedDate(this.dateSelection), 'breakfast': this.breakfast, 'lunch': this.lunch, 'dinner': this.dinner};
+    this.menuService.addMenu(menu);
+
+  }
+
+  public deleteFood() {
+    //this.menuService.deleteMenu();
   }
 
   public onPrint() {
@@ -41,6 +78,16 @@ export class AppComponent implements OnInit  {
   }
 
   public displayFormattedDate(date: Date) {
-    return date.toISOString().substring(0, 10);
+    return moment(date).format("DD/MM/YYYY");
+  }
+
+  public onDelete(id: number) {
+    this.menuService.deleteMenu(id);
+  }
+
+  clearDay() {
+    this.breakfast = '';
+    this.lunch = '';
+    this.dinner = '';
   }
 }

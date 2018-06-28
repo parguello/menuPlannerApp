@@ -12,6 +12,9 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DataTableModule} from 'primeng/components/datatable/datatable';
 import {CardModule} from 'primeng/card';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+
+import {MenuService} from "./services/menu.service";
 
 @NgModule({
   declarations: [
@@ -28,9 +31,10 @@ import {CardModule} from 'primeng/card';
     ButtonModule,
     InputTextModule,
     DataTableModule,
-    CardModule
+    CardModule,
+    InputTextareaModule
   ],
-  providers: [],
+  providers: [MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

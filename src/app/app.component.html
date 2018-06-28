@@ -1,77 +1,120 @@
-
-<head> 
-      <!--link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"-->
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-     </head>
+<head>
+    <!--link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+</head>
 <h1>
-<i class="fa fa-utensils"></i>
-  Menu Planner 
+    <i class="fa fa-utensils"></i>
+    Menu Planner
 </h1>
 
 <body>
-    <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-6">
-            <p-calendar styleClass="mainCalendar" styleClass="mainCalendar" [style]="{'width': '100%'}" [inputStyle] = "{'width':'85px'}"  [(ngModel)]="dateSelection" [inline]="true">
+    <div id="container">
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <p-calendar styleClass="mainCalendar2" [style]="{'width': '95%'}" [inputStyle]="{'width':'95%'}"
+                [(ngModel)]="dateSelection" [inline]="true" (onSelect)="changeDateSelection()">
             </p-calendar>
-        </div>
-        <div class="ui-g-10 ui-md-4 ui-lg-4">
-            <div id="dateSelected">
-                <p-card id="printSectionId">
-                    <p>{{displayFormattedDate(dateSelection)}}</p>
+            </div>
+            <div class="ui-g-10 ui-md-4 ui-lg-4">
+                <div id="dateSelected">
+                    <p-card>
+                        <div id="printSectionId">
+                            <h3>
+                                <strong>MENU {{displayFormattedDate(dateSelection)}}</strong>
+                            </h3>
 
-                    <p>Breakfast: {{breakfast}}</p>
-                    <p>Lunch: {{lunch}}</p>
-                    <p>Dinner: {{dinner}}</p>
-                    <p-footer>
-                        <button pButton type="button" label="Print" icon="fa fa-print" class="ui-button-secondary" (click)="onPrint()">
-                        </button>
+                            <p>
+                                <strong>Breakfast:</strong> {{breakfast}}</p>
+                            <p>
+                                <strong>Lunch:</strong> {{lunch}}</p>
+                            <p>
+                                <strong>Dinner:</strong> {{dinner}}</p>
+                        </div>
+                        <p-footer>
+                            <button pButton type="button" label="Print" icon="fa fa-print" class="ui-button-secondary" (click)="onPrint()">
+                            </button>
+                            <button pButton type="button" label="Edit Menu" icon="fa fa-edit" class="ui-button-primary" (click)="onEdit()">
+                            </button>
+                        </p-footer>
+                    </p-card>
 
-                        <button pButton type="button" label="Edit Menu" icon="fa fa-edit" class="ui-button-primary" (click)="onEdit()">
-                        </button>
-                    </p-footer>
-                </p-card>
-
+                </div>
             </div>
         </div>
+
+
+        <p-accordion *ngIf="isEditVisible">
+            <p-accordionTab header="Breakfast">
+                <p-header>
+                        <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Breakfast</span>
+                        <hr>
+                        <textarea pInputTextarea [(ngModel)]="breakfast" [rows]="3" [cols]="200" ></textarea>
+                </p-header>
+                <p-panel>
+                    <p-header>
+                        <div class="ui-helper-clearfix">
+                            <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Breakfast Details</span>
+                        </div>
+                    </p-header>
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <input type="text" pInputText [(ngModel)]="breakfast" />
+                            <button id="disabled-btn" type="button" (click)="addFood()" icon="fa fa-plus" pButton label="Add"></button>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p-dataTable [value]="foodItems">
+                                <p-column field="item" header="Item"></p-column>
+                                <p-column field="">
+                                    <ng-template let-rowdata="rowData" pTemplate="body">
+                                        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger"></button>
+                                    </ng-template>
+                                </p-column>
+                            </p-dataTable>
+                        </div>
+                    </div>
+                    <!--p-footer>
+                        <button pButton type="button" icon="fa fa-save" label="Save" class="ui-button-success" style="margin-right: .25em"></button>
+                        <button pButton type="button" icon="fa fa-undo" label="Cancel" class="ui-button-secondary"></button>
+                    </p-footer-->
+                </p-panel>
+            </p-accordionTab>
+            <p-accordionTab header="Lunch">
+                    <p-header>
+                            <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Lunch</span>
+                            <hr>
+                            <textarea pInputTextarea [(ngModel)]="lunch" [rows]="3" [cols]="200" ></textarea>
+                    </p-header>
+            </p-accordionTab>
+            <p-accordionTab header="Dinner">
+                    <p-header>
+                            <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Dinner</span>
+                            <hr>
+                            <textarea pInputTextarea [(ngModel)]="dinner" [rows]="3" [cols]="200" ></textarea>
+                    </p-header>
+            </p-accordionTab>
+
+            <p-footer>
+                    <span class="pull-center">
+                    <button pButton type="button" (click)="addFood()" icon="fa fa-save" label="Save" class="ui-button-success" style="margin-right: .25em"></button>
+                    <button pButton type="button" (click)="deleteFood()" icon="fa fa-trash" label="Delete" class="ui-button-danger" style="margin-right: .25em"></button>
+                    <button pButton type="button" icon="fa fa-undo" label="Cancel" class="ui-button-secondary"></button>
+                    </span>
+                </p-footer>
+        </p-accordion>
+
     </div>
 
 
-<p-accordion *ngIf="isEditVisible">
-    <p-accordionTab header="Breakfast">
-       <p-panel>
-            <p-header>
-                <div class="ui-helper-clearfix">
-                    <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Breakfast Details</span>
-                </div>
-            </p-header>
-            
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <input type="text" pInputText [(ngModel)]="food"/>
-                        <button id="disabled-btn" type="button" (click)="addFood()" icon="fa fa-plus" pButton label="Add"></button>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-lg-6">
-                    <p-dataTable [value]="foodItems">
-                        <p-column field="item" header="Item"></p-column>
-                        <p-column field="">
-                                <ng-template let-rowdata="rowData" pTemplate="body">
-                                        <button pButton type="button" icon="fa fa-trash" class="ui-button-danger"></button>
-                                </ng-template>
-                        </p-column>
-                    </p-dataTable>
-                </div>
-            </div>
-          <p-footer>
-                <button pButton type="button" icon="fa fa-save" label="Save" class="ui-button-success" style="margin-right: .25em"></button>
-                <button pButton type="button" icon="fa fa-undo" label="Cancel" class="ui-button-secondary"></button>
-            </p-footer>
-        </p-panel>
-    </p-accordionTab>
-    <p-accordionTab header="Lunch">
-        Content 2
-    </p-accordionTab>
-    <p-accordionTab header="Dinner">
-        Content 3    
-    </p-accordionTab>
-</p-accordion>
 </body>
+<footer>
+    <div class="footer text-center">
+        <p>Designed and coded with
+            <i class="fa fa-heart"></i> by Patricia Arguello.
+        </p>
+    </div>
+</footer>
+
+<script src="components/angular2-indexeddb/angular2-indexeddb.js"></script>

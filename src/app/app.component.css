@@ -1,37 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Shrikhand');
 @import url('https://fonts.googleapis.com/css?family=Concert+One');
 
+#container {
+    min-height:100%;
+    /*position:relative;*/
+    background-color:#e6ffe6;
+ }
+
 h1 {
     background-color: #7FBF3F;
     height: 100%;
     padding-left: 20px;
-    padding-top: 20px;
+    /*padding-top: 20px;*/
     color: white;
    /* font-family: 'Shrikhand', cursive;*/
     font-family: 'Concert One', cursive;
+    font-size: 2em;
+    margin: 0px;
+}
+
+hr {
+    color: #7FBF3F;
+}
+
+body {
+    background-color:#e6ffe6;
+    margin:0;
+    padding:0;
+    height:100%;
 }
 
 #dateSelected{
     font-family: 'Concert One', cursive;
 }
-
-body > div > div.ui-g-12.ui-md-6.ui-lg-6 > p-calendar > span > div {
-    width:100%!important;
-}
-/*:host ::ng-deep .main-calendar{
-    width: 200%!important;
-}*/
-
-.ui-datepicker.ui-datepicker-inline {
-    width: inherit!important;
-}
-.ui-datepicker{
-    width: inherit;
-}
-
-.main-calendar  {
-    width: 270px;
-  }
 
   i.fa {
     margin: 0.5em;
@@ -45,9 +46,38 @@ body > div > div.ui-g-12.ui-md-6.ui-lg-6 > p-calendar > span > div {
     text-align: center;
   }
   
-  i.fa:hover{
+  i.fa :hover{
     color:lightblue;
      border: 2px solid lightblue;
     cursor:pointer;
   }
+
+  .footer{
+      color: black;
+      font-family: 'Concert One', cursive;
+      text-align: center;
+      position:absolute;
+      width: 100%;
+  }
+
+  .footer i.fa {
+    margin: 0.5em;
+    font-size: 1.5em;
+    color: black;
+    padding: 0.5em;
+    transition: all .5s ease;
+    width: 1em; 
+    text-align: center;
+  }
+
+
+  :host .ui-datepicker{
+    width: 95%!important;
+}
+
+.ui-state-highlight {
+    border-color: #7FBF3F!important;
+    background-color: #7FBF3F!important;
+    }
+
 
